@@ -48,8 +48,65 @@ function runit() {
 <textarea id="yourcode" cols="40" rows="10">
 import turtle
 
-t = turtle.Turtle()
-t.forward(100)
+# We will need the edges of our box, so we set them
+# Note that the screen is centred on zero, so the edges are at:
+# -width / 2 and width / 2
+# and -height / 2 and height / 2
+width = 800
+height = 800
+floor=400
+wall=400
+window = turtle.Screen()
+window.setup(width, height)
+window.tracer(0)
+
+ball = turtle.Turtle()
+ball.penup()
+ball.color("red")
+ball.shape("circle")
+
+tur = turtle.Turtle()
+
+tleft=(-200,200)
+tright=(200,200)
+bleft=(-200,-200)
+bright=(200,-200)
+tur.penup()
+tur.goto(tleft)
+tur.pendown()
+tur.goto(tright)
+tur.goto(bright)
+tur.goto(bleft)
+tur.goto(tleft)
+tur.hideturtle()
+
+
+
+
+# Free fall acceleration -g
+g = -9.81
+
+# Timestep size
+t = 0.0016
+
+# Starting velocity
+u = 0
+
+ball.sety(200)
+
+
+while True:
+	v=(u+(g*t))
+	s=(v*t)
+	u=v	
+	ball.sety(ball.ycor()+s)
+	if ball.ycor()<-(floor/2):
+		u=-v	
+		v=(u+(g*t))
+		s=(v*t)
+		ball.sety(ball.ycor()+s)
+	window.update()
+
 
 </textarea><br /> 
 <button type="button" onclick="runit()">Run</button> 
